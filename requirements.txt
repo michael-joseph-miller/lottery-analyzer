@@ -1,4 +1,4 @@
-dotenv
+python-dotenv
 pandas
 sqlite3
 sodapy
