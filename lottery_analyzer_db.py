@@ -10,6 +10,16 @@ load_dotenv()
 
 
 def formatGameData(game_data_df: pd.DataFrame, game_name: str) -> pd.DataFrame:
+    """
+    Format game data retrieved from data.ny.gov to Pandas DataFrame
+
+    Args:
+        game_data_df (pd.DataFrame): _description_
+        game_name (str): _description_
+
+    Returns:
+        pd.DataFrame: _description_
+    """
     data_list = []
 
     for row in game_data_df.iterrows():
@@ -19,14 +29,15 @@ def formatGameData(game_data_df: pd.DataFrame, game_name: str) -> pd.DataFrame:
             bonus_ball = row[1]['mega_ball']
         elif game_name == 'powerball':
             field_numbers = row[1]['winning_numbers'][0:14]
-            bonus_ball = row[1]['winning_numbers'][2:None:-1]
+            bonus_ball = row[1]['winning_numbers'][-2:]
         multiplier = row[1]['multiplier']
         # Append row to data_list
         data_list.append({
             'draw_date': draw_date,
             'field_numbers': field_numbers,
             'bonus_ball': bonus_ball,
-            'multiplier': multiplier})
+            'multiplier': multiplier
+        })
 
     return pd.DataFrame(data=data_list)
 
@@ -38,11 +49,10 @@ def insertDrawingsHistory(game_data_df: pd.DataFrame, game_name: str) -> None:
     # Connect to db and create cursor
     db_connection = sqlite3.connect(os.environ['DB_FILENAME'])
 
-    num_inserted = formatted_df.to_sql(
-        f'{game_name}_drawings',
-        db_connection,
-        if_exists='replace',
-        index=False)
+    num_inserted = formatted_df.to_sql(f'{game_name}_drawings',
+                                       db_connection,
+                                       if_exists='replace',
+                                       index=False)
 
     if num_inserted is not None:
         print(f'{num_inserted} {game_name} rows inserted.')
@@ -57,8 +67,8 @@ def updateDrawingsHistory(games: list[str]) -> None:
         latest_drawing_date_in_db = getLatestDrawDate(game)
 
         # get latest draw date from data api
-        latest_drawing_date = api.getLotteryData(
-            game, 1)['draw_date'].values[0]
+        latest_drawing_date = api.getLotteryData(game,
+                                                 1)['draw_date'].values[0]
 
         # if latest draw date not in db update db
         if (latest_drawing_date_in_db != latest_drawing_date):
@@ -75,8 +85,7 @@ def getLatestDrawDate(game_name: str) -> str:
     # Try to select table, if not exists return None
     try:
         result_df = pd.read_sql_query(
-            f'SELECT MAX(draw_date) FROM {game_name}_drawings',
-            db_connection)
+            f'SELECT MAX(draw_date) FROM {game_name}_drawings', db_connection)
     except BaseException:
         return None
     latest_date = result_df.to_numpy()[0][0]
@@ -90,7 +99,22 @@ def getFieldNumbers(game_name: str) -> pd.DataFrame:
 
     # Get all field numbers
     field_numbers_df = pd.read_sql(
-        f'SELECT field_numbers FROM {game_name}_drawings',
-        db_connection)
+        f'SELECT field_numbers FROM {game_name}_drawings', db_connection)
 
     return field_numbers_df
+
+
+def insertGameInfo(game_info_df: pd.DataFrame) -> None:
+    # Connect to db and create cursor
+    db_connection = sqlite3.connect(os.environ['DB_FILENAME'])
+
+    num_inserted = game_info_df.to_sql('game_info',
+                                       db_connection,
+                                       if_exists='append',
+                                       index=False,
+                                       index_label='game_name')
+
+    if num_inserted is not None:
+        print(f'{num_inserted} rows inserted.')
+    else:
+        print('Database did not update.')
