@@ -33,9 +33,7 @@ class Game:
     days_drawn: list[Day] = field(default_factory=list)
     history: list[Drawing] = field(default_factory=list)
 
-    def __post_init__:
+    # def __post_init__:
 
-
-
-    def set_analysis_start_date:
-        analysis_start_date = date.parse(timestr=ana fuzzy=True)
+    # def set_analysis_start_date:
+    #     analysis_start_date = date.parse(timestr=ana fuzzy=True)
