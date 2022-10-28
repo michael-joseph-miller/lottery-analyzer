@@ -36,6 +36,7 @@ async def main():
     fig, ax = plt.subplots(2,1)
     fig.set_size_inches(12,12)
     fig.set_tight_layout(True)
+    print('------------------------------------------')
     for i, game in enumerate(games):
         field_nums_overdue = game.get_field_nums_overdue()
         id = game.name.lower().replace(' ', '_')
