@@ -4,12 +4,13 @@
 
 1. Retrieve most current data from lottery database NYS sodapy
 2. Analyze data for following outputs
-   1. Drawings since last hit (int)
-      1. Latest drawing date - last date # drawn
+   1. Number of drawings since last hit (int), no hit count
+      1. last_drawing_date (game) - last_hit_date (ball #)
+      2. OR increment no_hit_count for every drawing
    2. Hit frequency (int)
-      1. #drawings/#hits round up
+      1. #drawings since start date / #hits for ball number (round up)
    3. Overdue rate (int) - Number of drawings overdue
-      1. Drawings since last hit - hit freq
+      1. Drawings since last hit(no_hit_count) - hit freq
 
 ## Inputs
 
@@ -42,8 +43,9 @@
    2. Each Ball number, field and bonus ball
       1. Number of total hits
       2. Last hit date
-      3. drawings since last hit
+      3. Drawings since last hit, no_hit_count
       4. Hit freq
+      5. Overdue
 
 ## Database Tables
 
@@ -55,9 +57,9 @@
 
 ### analysis
 
-| game_name | ball_num | total_num_hits | last_hit_date | draws_since_last_hit | freq | draws_overdue |
-| :-------: | :------: | :------------: | :-----------: | :------------------: | :--: | :-----------: |
-|    str    |   str    |      int       |   date str    |         int          | int  |      int      |
+| game_name | ball_num | total_num_hits | last_hit_date | no_hit_count | freq | draws_overdue |
+| :-------: | :------: | :------------: | :-----------: | :----------: | :--: | :-----------: |
+|    str    |   str    |      int       |   date str    |     int      | int  |      int      |
 
 ### drawings
 

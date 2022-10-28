@@ -1,0 +1,16 @@
+[
+  {
+    "name": "Powerball",
+    "start_date": "2015-10-04",
+    "field_num_max": 69,
+    "bonus_ball_max": 26,
+    "days_drawn": ["mon", "wed", "sat"]
+  },
+  {
+    "name": "Mega Millions",
+    "start_date": "2017-10-31",
+    "field_num_max": 70,
+    "bonus_ball_max": 25,
+    "days_drawn": ["tue", "fri"]
+  }
+]
