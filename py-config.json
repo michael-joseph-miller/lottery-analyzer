@@ -1,13 +1,13 @@
 {
   "packages": ["matplotlib", "sodapy"],
   "paths": [
-    "/request.py",
-    "/main.py",
-    "/game.py",
-    "/drawing.py",
-    "/game_db.py",
-    "/games.json",
-    "/lottery_data_api.py",
-    "/number_analysis.py"
+    "request.py",
+    "main.py",
+    "game.py",
+    "drawing.py",
+    "game_db.py",
+    "games.json",
+    "lottery_data_api.py",
+    "number_analysis.py"
   ]
 }
