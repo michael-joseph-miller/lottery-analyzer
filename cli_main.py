@@ -2,6 +2,7 @@
 """
 Starting point for Lottery Analyzer App
 """
+import asyncio
 
 import matplotlib.pyplot as plt
 
@@ -22,34 +23,21 @@ async def main():
         await temp_game.init()
         games.append(temp_game)
 
-    # fig, ax = plt.subplots(2,1)
-    # fig.set_size_inches(12,6)
-    # fig.set_tight_layout(True)
-    # for i, game in enumerate(games):
-    #     field_nums_overdue = game.get_field_nums_overdue()
-    #     ax[i].bar(field_nums_overdue[0], field_nums_overdue[1])
-    #     ax[i].set_title(f'{game.name} Overdue Ball Numbers')
-    #     ax[i].set_facecolor('#222')
-    #     ax[i].set_ylabel('# Drawings Overdue')
-    #     ax[i].set_xlabel('Ball Number')
-        
     fig, ax = plt.subplots(2,1)
-    fig.set_size_inches(12,12)
+    fig.set_size_inches(12,6)
     fig.set_tight_layout(True)
     for i, game in enumerate(games):
         field_nums_overdue = game.get_field_nums_overdue()
-        id = game.name.lower().replace(' ', '_')
-        
-        # ax[i].figure(id, figsize=(12,6), layout='tight')
         ax[i].bar(field_nums_overdue[0], field_nums_overdue[1])
         ax[i].set_title(f'{game.name} Overdue Ball Numbers')
+        ax[i].set_facecolor('#222')
         ax[i].set_ylabel('# Drawings Overdue')
         ax[i].set_xlabel('Ball Number')
-        pyscript.write('plot', fig) # type: ignore - undefined variable
         
         num_picks = []
         for i in range(0,len(field_nums_overdue[0]),5):
             num_picks.append(field_nums_overdue[0][i:i+5])
+        
         print(f'{game.name}')
         print('------------------------------------------')
         print(f'Last Draw Date: {game.last_draw_date}')
@@ -58,6 +46,10 @@ async def main():
         for el in num_picks:
             print(' '.join(el))
         print('------------------------------------------')
+        
+    # pyscript.write('plot', fig) # type: ignore - undefined variable
+    plt.show()
 
 if __name__ == '__main__':
-    await main() # type: ignore - await allowed only onside function
+    # await main() # type: ignore - await allowed only onside function
+    asyncio.run(main())

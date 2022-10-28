@@ -1,6 +1,9 @@
 from typing import Any, Optional
+from urllib import response
 
 from pyodide.http import FetchResponse, pyfetch
+
+# import requests
 
 
 async def request(url: str,
@@ -20,6 +23,7 @@ async def request(url: str,
     Return:
         response: pyodide.http.FetchResponse = use with .status or await.json(), etc.
     """
+    
     kwargs = {
         "method": method,
         "mode": "cors"
@@ -30,6 +34,9 @@ async def request(url: str,
         kwargs["headers"] = headers
     kwargs.update(fetch_kwargs)
 
-    response = await pyfetch(url, **kwargs)
+    response = await pyfetch(url, **kwargs) # ignore: 
+    # url = url.replace(' ', '%20')
+    # response = requests.get(url)
+    # response = response.json()
 
-    return response
+    return await response.json()

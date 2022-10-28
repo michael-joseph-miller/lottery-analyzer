@@ -1,6 +1,7 @@
 {
   "packages": ["matplotlib", "sodapy"],
   "paths": [
+    "main.css",
     "request.py",
     "main.py",
     "game.py",

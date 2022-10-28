@@ -24,4 +24,4 @@ async def get_lottery_data(game_name: str, start_date: str, limit: int = 2500):
     headers = {"Content-type": "application/json"}
     response = await request(url, method="GET", headers=headers)
 
-    return await response.json()
+    return response

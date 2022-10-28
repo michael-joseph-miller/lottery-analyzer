@@ -24,7 +24,8 @@ class NumberAnalysis:
     def analyze_number(self, drawing_history: list[Drawing]):
         """Calculate total number of hits for a ball number in the provided history."""
         total_hits, no_hit_count, last_hit_date = 0, 0, ''
-        for drawing in drawing_history:
+        sorted_history = sorted(drawing_history, key=lambda drawing: drawing.draw_date)
+        for drawing in sorted_history:
             if self.number in drawing.field_nums:
                 total_hits += 1
                 no_hit_count = 0

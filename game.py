@@ -29,7 +29,6 @@ class Game:
         await self.get_history()
         self.find_last_draw_date()
         self.analyze_field_nums()
-        self.set_field_nums_overdue()
 
     async def get_history(self):
         """Get game history from data api and set drawing_history field"""
@@ -49,12 +48,14 @@ class Game:
             self.field_num_analysis.append(
                 (NumberAnalysis(f'{ball_num:0>2}', self.drawing_history)))
 
-    def set_field_nums_overdue(self):
+    def get_field_nums_overdue(self) -> list[list]:
         """Set field numbers overdue field"""
-        self.field_nums_overdue.append([])
-        self.field_nums_overdue.append([])
-        for field_num in self.field_num_analysis:
+        field_nums_overdue = [[],[]]
+        sorted_analysis = sorted(self.field_num_analysis, key=lambda number: number.draws_overdue, reverse=True)
+        
+        for field_num in sorted_analysis:
             if field_num.draws_overdue > 0:
-                self.field_nums_overdue[0].append(field_num.number)
-                self.field_nums_overdue[1].append(field_num.draws_overdue)
+                field_nums_overdue[0].append(field_num.number)
+                field_nums_overdue[1].append(field_num.draws_overdue)
+        return field_nums_overdue
         # self.field_nums_overdue.sort(key=lambda num: num[1], reverse=True)
