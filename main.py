@@ -15,24 +15,15 @@ async def main():
     """
     games: list[Game] = []
 
+    # Load game info from games.json
     for game in load_games():
         temp_game = Game(game['name'], game['start_date'],
                                 game['field_num_max'], game['bonus_ball_max'],
                                 game['days_drawn'])
         await temp_game.init()
         games.append(temp_game)
-
-    # fig, ax = plt.subplots(2,1)
-    # fig.set_size_inches(12,6)
-    # fig.set_tight_layout(True)
-    # for i, game in enumerate(games):
-    #     field_nums_overdue = game.get_field_nums_overdue()
-    #     ax[i].bar(field_nums_overdue[0], field_nums_overdue[1])
-    #     ax[i].set_title(f'{game.name} Overdue Ball Numbers')
-    #     ax[i].set_facecolor('#222')
-    #     ax[i].set_ylabel('# Drawings Overdue')
-    #     ax[i].set_xlabel('Ball Number')
         
+    # Create Plots and display
     fig, ax = plt.subplots(2,1)
     fig.set_size_inches(12,12)
     fig.set_tight_layout(True)
@@ -41,7 +32,6 @@ async def main():
         field_nums_overdue = game.get_field_nums_overdue()
         id = game.name.lower().replace(' ', '_')
         
-        # ax[i].figure(id, figsize=(12,6), layout='tight')
         ax[i].bar(field_nums_overdue[0], field_nums_overdue[1])
         ax[i].set_title(f'{game.name} Overdue Ball Numbers')
         ax[i].set_ylabel('# Drawings Overdue')

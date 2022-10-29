@@ -9,9 +9,19 @@
   <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
   <link rel="stylesheet" href="main.css">
   <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+  <script defer src='overlay.js'></script>
 </head>
 
 <body>
+  <div id="pyscript_loading_splash" class="py-overlay my-overlay">
+    <div class="py-pop-up">
+      <div class="smooth spinner"></div>
+      <div id="pyscript-loading-label" class="label">
+        <div id="pyscript-operation-details">
+        </div>
+      </div>
+    </div>
+  </div>
   <main id='wrapper'>
     <py-config type='json' src='py-config.json'></py-config>
     <div id='plot'></div>
