@@ -7,7 +7,7 @@ import asyncio
 import matplotlib.pyplot as plt
 
 from game import Game
-from game_db import load_games
+from game_info_db import load_games
 
 
 async def main():

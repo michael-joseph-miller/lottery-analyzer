@@ -6,6 +6,7 @@ from dataclasses import dataclass, field
 
 import lottery_data_api as api
 from drawing import Drawing
+from game_info_db import load_game_info
 from number_analysis import NumberAnalysis
 
 
@@ -15,6 +16,7 @@ class Game:
     Class definition for lottery game information
     """
     name: str
+    api_id: str
     start_date: str
     field_num_max: int
     bonus_ball_max: int
@@ -32,7 +34,7 @@ class Game:
 
     async def get_history(self):
         """Get game history from data api and set drawing_history field"""
-        results = await api.get_lottery_data(self.name, self.start_date)
+        results = await api.get_lottery_data(self.name, self.api_id, self.start_date)
         self.drawing_history = Drawing.to_drawings_list(results)
 
     def find_last_draw_date(self):
@@ -59,3 +61,16 @@ class Game:
                 field_nums_overdue[1].append(field_num.draws_overdue)
         return field_nums_overdue
         # self.field_nums_overdue.sort(key=lambda num: num[1], reverse=True)
+    
+
+async def init_games() -> list[Game]:
+    games = []
+    # Load game info from games.json
+    for game in load_game_info():
+        temp_game = Game(game['name'], game['api_id'], game['start_date'],
+                                game['field_num_max'], game['bonus_ball_max'],
+                                game['days_drawn'])
+        await temp_game.init()
+        games.append(temp_game)
+        
+    return games

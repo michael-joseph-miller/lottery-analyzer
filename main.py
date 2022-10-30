@@ -5,23 +5,15 @@ Starting point for Lottery Analyzer App
 
 import matplotlib.pyplot as plt
 
-from game import Game
-from game_db import load_games
+from game import init_games
+from game_info_db import load_game_info
 
 
 async def main():
     """
     main function to run when this file is executed
     """
-    games: list[Game] = []
-
-    # Load game info from games.json
-    for game in load_games():
-        temp_game = Game(game['name'], game['start_date'],
-                                game['field_num_max'], game['bonus_ball_max'],
-                                game['days_drawn'])
-        await temp_game.init()
-        games.append(temp_game)
+    games = await init_games()
         
     # Create Plots and display
     fig, ax = plt.subplots(2,1)

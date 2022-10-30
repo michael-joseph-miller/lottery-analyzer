@@ -6,8 +6,8 @@
     "main.py",
     "game.py",
     "drawing.py",
-    "game_db.py",
-    "games.json",
+    "game_info_db.py",
+    "game_info.json",
     "lottery_data_api.py",
     "number_analysis.py"
   ]

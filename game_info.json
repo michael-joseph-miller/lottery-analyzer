@@ -1,6 +1,7 @@
 [
   {
     "name": "Powerball",
+    "api_id": "d6yy-54nr",
     "start_date": "2015-10-04",
     "field_num_max": 69,
     "bonus_ball_max": 26,
@@ -8,6 +9,7 @@
   },
   {
     "name": "Mega Millions",
+    "api_id": "5xaw-6ayf",
     "start_date": "2017-10-31",
     "field_num_max": 70,
     "bonus_ball_max": 25,

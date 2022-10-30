@@ -3,16 +3,8 @@
 from request import request  # import our request function.
 
 
-async def get_lottery_data(game_name: str, start_date: str, limit: int = 2500):
-    """Gets lottery data from NY Lottery database"""
-
-    # Api database id
-    if game_name == 'Powerball':
-        api_id = 'd6yy-54nr'
-    elif game_name == 'Mega Millions':
-        api_id = '5xaw-6ayf'
-    else:
-        return    
+async def get_lottery_data(game_name: str, api_id: str, start_date: str, limit: int = 2500):
+    """Gets lottery data from NY Lottery database"""  
     
     # Query strings
     limit_query = f'$limit={limit}'

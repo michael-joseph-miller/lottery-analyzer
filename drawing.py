@@ -6,10 +6,10 @@ from dataclasses import InitVar, dataclass, field
 class Drawing():
     """Drawing class definition"""
     draw_date: str
-    field_num_str: InitVar(str)
-    field_nums: list[str] = field(init=False)
-    multiplier: str = None
-    bonus_ball: str = '00'
+    field_num_str: InitVar[str]
+    field_nums: list[str] = field(init=False, default_factory=list)
+    multiplier: str = ''
+    bonus_ball: str = ''
 
     def __post_init__(self, field_num_str: str):
         field_nums = field_num_str.split(' ')
